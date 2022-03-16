@@ -3,11 +3,32 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+const session = require("express-session");
+const passport = require("passport");
+const mongoose = require("mongoose");
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 
+// Use dotenv package to get info from .env file
+require("dotenv").config({ path: "./config/.env" });
+
 var app = express();
+
+/*=================================================*/
+/*         Configure passport authentication       */
+/*-------------------------------------------------*/
+require("./config/passport")(passport);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Set up locals variables for views
+app.use(function (req, res, next) {
+  res.locals.user = req.user;
+  next();
+});
+/***************************************************/
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
