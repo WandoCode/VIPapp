@@ -2,18 +2,47 @@ var createError = require("http-errors");
 var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
-var logger = require("morgan");
 const session = require("express-session");
 const passport = require("passport");
 const mongoose = require("mongoose");
 
-var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
-
 // Use dotenv package to get info from .env file
 require("dotenv").config({ path: "./config/.env" });
 
+// Start express
 var app = express();
+
+/*=================================================*/
+/*              Start general middleware           */
+/*-------------------------------------------------*/
+// view engine setup
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "pug");
+
+// Other middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, "public")));
+app.use(
+  session({
+    secret: process.env.SECRET_WORD,
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+/***************************************************/
+
+/*=================================================*/
+/*              Start mongoDB connection           */
+/*-------------------------------------------------*/
+const mongoDb = process.env.MONGODB_LINK;
+
+mongoose.connect(mongoDb, { useUnifiedTopology: true, useNewUrlParser: true });
+
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "mongo connection error"));
+/***************************************************/
 
 /*=================================================*/
 /*         Configure passport authentication       */
@@ -30,18 +59,16 @@ app.use(function (req, res, next) {
 });
 /***************************************************/
 
-// view engine setup
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "pug");
-
-app.use(logger("dev"));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
+/*=================================================*/
+/*                 Configure Routes                */
+/*-------------------------------------------------*/
+var indexRouter = require("./routes/index");
+var usersRouter = require("./routes/users");
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
+
+/***************************************************/
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -1,0 +1,26 @@
+extends layout
+
+block content
+    h1 Sign up
+    form(action="/signup" method="post") 
+        label(for="username") Username 
+        input(type="email" name="username" placeholder="Your email" required value=(datas? datas.username: "") minlength="2" maxlength="50")
+
+        label(for="password") Password 
+        input(type="password" name="password" required minlength="6" maxlength="50")
+
+        label(for="password2") Password confirmation
+        input(type="password" name="password2" required minlength="6" maxlength="50")
+
+        label(for="firstName") First Name
+        input(type="text", name="firstName" required value=(datas? datas.firstName: "") minlength="2" maxlength="50")
+
+        label(for="lastName") Last Name
+        input(type="text", name="lastName" required value=(datas? datas.lastName: "") minlength="2" maxlength="50")
+
+        input(type="submit" value="Sign Up")
+
+    if errors 
+        ul
+            for error in errors     
+                li !{error.msg}
