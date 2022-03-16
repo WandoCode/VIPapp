@@ -1,0 +1,17 @@
+extends layout
+
+block content
+    h1 Sign In
+    form(action="/signin" method="post") 
+        label(for="username") Username 
+        input(type="email" name="username" placeholder="Your email" required value=(datas? datas.username: "") minlength="2" maxlength="50")
+
+        label(for="password") Password 
+        input(type="password" name="password" required minlength="6" maxlength="50")
+
+        input(type="submit" value="Sign In")
+
+    if errors 
+        ul
+            for error in errors     
+                li !{error.msg}
