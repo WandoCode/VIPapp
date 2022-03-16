@@ -1,0 +1,12 @@
+extends layout
+
+block content
+
+    form(action="", method="post") 
+        label(for="title") Title 
+        input(type="text" name="title" minlength="5" maxlength="50")
+
+        label(for="message") Password 
+        textarea(name="message", cols="30", rows="10" required minlength="50" maxlength="5000")
+
+        input(type="submit" value="Add a new message")
