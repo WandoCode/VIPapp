@@ -1,6 +1,5 @@
 /* Validation for form in index route */
 
-const User = require("../models/user");
 const { body } = require("express-validator");
 
 module.exports = {

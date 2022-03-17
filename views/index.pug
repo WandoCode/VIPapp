@@ -7,3 +7,14 @@ block content
   else 
 
     p Please sign in!
+  
+  if messages 
+    ul
+      for message in messages 
+        li  
+          h3 Title: !{message.title}
+          div Message: !{message.message}
+          div Author: !{message.author.username}
+        
+         
+

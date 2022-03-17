@@ -3,10 +3,22 @@ const bcrypt = require("bcryptjs");
 const { validationResult, body } = require("express-validator");
 
 const User = require("../models/user");
+const Message = require("../models/message");
 
 /* GET home page. */
-exports.index = function (req, res, next) {
-  res.render("index");
+exports.index = async function (req, res, next) {
+  try {
+    // Get the 10 lasts messages from the DB
+    const messages = await Message.find()
+      .populate("author")
+      .sort({ createdAt: -1 })
+      .limit(10);
+
+    // Render them
+    res.render("index", { messages: messages });
+  } catch (err) {
+    return next(err);
+  }
 };
 
 /* GET sign up page. */
@@ -43,7 +55,7 @@ exports.signup_post =
       }
       // No errors in form
       else {
-        // HAsh password
+        // Hash password
         bcrypt.hash(req.body.password, 10, (err, h_pass) => {
           if (err) return next(err);
 

@@ -17,10 +17,14 @@ html
             a(href="/signup") Sing up 
 
         if locals.user
+          if !locals.user.isVIP
+            li 
+              a(href="/users/VIP-application") VIP application
+
+          if locals.user.isVIP
+            li 
+              a(href="/message/new-post") New message
+
           li 
             a(href="/logout") Logout 
-          
-          li 
-            a(href="/message/new-post") New message
-
     block content

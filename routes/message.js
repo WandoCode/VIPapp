@@ -1,13 +1,26 @@
 var express = require("express");
 var router = express.Router();
 
+const { isVIP } = require("../middlewares/isVIP");
 const { isAuthenticated } = require("../middlewares/auth");
+const { new_message } = require("../middlewares/validMessage");
 const messageController = require("../controllers/messageControllers");
 
 /* GET create a new message */
-router.get("/new-post", isAuthenticated, messageController.new_message_get);
+router.get(
+  "/new-post",
+  isAuthenticated,
+  isVIP,
+  messageController.new_message_get
+);
 
 /* POST create a new message */
-router.get("/new-post", isAuthenticated, messageController.new_message_post);
+router.post(
+  "/new-post",
+  isAuthenticated,
+  isVIP,
+  new_message,
+  messageController.new_message_post
+);
 
 module.exports = router;

@@ -1,0 +1,21 @@
+extends layout
+
+block content
+    h1 VIP Application 
+
+    if locals.user.isVIP
+        p You are now a VIP member! 
+
+    else
+        p You need to be invited to become a VIP 
+
+        p Please, enter the VIP password to get  you account updated.
+
+        form(action="", method="post") 
+            label(for="vip_password") 
+            input(type="text", name="vip_password", maxlength="50" required)
+
+            input(type="submit", value="Go!")
+
+        if wrongPassword 
+            p Try again or found a VIP member to invite you!
