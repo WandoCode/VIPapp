@@ -4,5 +4,17 @@ body {
 }
 
 a {
-  color: #00B7FF;
+  color: #00b7ff;
+}
+
+.relative {
+  position: relative;
+}
+
+.offset {
+  position: absolute;
+  left: -50px;
+  top: 0px;
+  width: 30px;
+  height: 30px;
 }

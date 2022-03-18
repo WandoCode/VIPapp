@@ -1,20 +1,22 @@
 extends layout
 
 block content
-  if messages 
-     ul
+  // message = [] => messages.length is 0, so it's false
+  if messages.length 
+    ul(class="list-unstyled")
       for message in messages 
-        li  
-          h3 Title: !{message.title}
-          blockquote(class="blockquote") Message: !{message.message}
-    
+        li(class="relative")  
+          if locals.user
+            if locals.user.isAdmin
+              form(action=`/message/${message.id}/delete`, method="post") 
+                button(type="submit" class="btn btn-danger offset") x
+          h5 Title: !{message.title}
+          blockquote(class="blockquote") !{message.message}
           if locals.user
             if locals.user.isVIP
               figcaption(class="blockquote-footer") !{message.author.firstName} !{message.author.lastName}, !{message.createdAtFormatted}
             
-            if locals.user.isAdmin
-              form(action=`/message/${message.id}/delete`, method="post") 
-                input(type="submit", value="X")
+            
 
   else
     p Nothing to show yet!

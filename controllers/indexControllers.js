@@ -9,7 +9,7 @@ const Message = require("../models/message");
 exports.index = async function (req, res, next) {
   try {
     // Get the 10 lasts messages from the DB
-    const messages = await Message.find()
+    let messages = await Message.find()
       .populate("author")
       .sort({ createdAt: -1 })
       .limit(10);
