@@ -3,10 +3,10 @@ extends layout
 block content
 
     form(action="", method="post") 
-        label(for="title") Title 
-        input(type="text" name="title" minlength="5" maxlength="50" required)
+        label(for="title" class="form-label") Title 
+        input(type="text" name="title" minlength="5" maxlength="50" required class="form-control")
 
-        label(for="message") Password 
-        textarea(name="message", cols="30", rows="10" required minlength="50" maxlength="5000")
+        label(for="message" class="form-label") Password 
+        textarea(name="message", cols="30", rows="10" required minlength="50" maxlength="5000" class="form-control")
 
-        input(type="submit" value="Add a new message")
+        button(type="submit" class="btn btn-primary") Add a new message

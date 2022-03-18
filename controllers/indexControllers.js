@@ -15,7 +15,7 @@ exports.index = async function (req, res, next) {
       .limit(10);
 
     // Render them
-    res.render("index", { messages: messages });
+    res.render("index", { messages: messages, page: "index" });
   } catch (err) {
     return next(err);
   }
@@ -23,7 +23,7 @@ exports.index = async function (req, res, next) {
 
 /* GET sign up page. */
 exports.signup_get = (req, res, next) => {
-  res.render("signup");
+  res.render("signup", { page: "signup" });
 };
 
 /* POST request for sign up. */
@@ -51,6 +51,7 @@ exports.signup_post =
             lastName: req.body.lastName,
           },
           errors: errors.errors,
+          page: "signup",
         });
       }
       // No errors in form
@@ -82,7 +83,7 @@ exports.signup_post =
 
 /* GET sign in page. */
 exports.signin_get = (req, res, next) => {
-  res.render("signin");
+  res.render("signin", { page: "signin" });
 };
 
 /* POST request for sign in. */
@@ -94,7 +95,7 @@ exports.signin_post = async (req, res, next) => {
 
   // Errors have been found: render form again
   if (!errors.isEmpty()) {
-    res.render("signin", { errors: errors.errors });
+    res.render("signin", { errors: errors.errors, page: "signin" });
   }
   // No errors in form
   else {

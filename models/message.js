@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const moment = require("moment");
 
-const MassageSchema = new Schema(
+const MessageSchema = new Schema(
   {
     title: { type: String, required: true, minlength: 5, maxlength: 50 },
     message: { type: String, required: true, minlength: 50, maxlength: 5000 },
@@ -10,10 +11,16 @@ const MassageSchema = new Schema(
   { timestamps: true } // USe .createdAt to get creation timestamp, and .updatedAt to get the last update timestamp
 );
 
-MassageSchema.virtual("url").get(function () {
+MessageSchema.virtual("url").get(function () {
   return `message/${this._id}`;
 });
 
-const MessageModel = mongoose.model("Message", MassageSchema);
+MessageSchema.virtual("createdAtFormatted").get(function () {
+  let moment_date = moment(new Date(this.createdAt));
+
+  return moment_date.format("DD/MM/YYYY");
+});
+
+const MessageModel = mongoose.model("Message", MessageSchema);
 
 module.exports = MessageModel;

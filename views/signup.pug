@@ -3,22 +3,22 @@ extends layout
 block content
     h1 Sign up
     form(action="/signup" method="post") 
-        label(for="username") Username 
-        input(type="email" name="username" placeholder="Your email" required value=(datas? datas.username: "") minlength="2" maxlength="50")
+        label(for="username" class="form-label") Username 
+        input(type="email" name="username" placeholder="Your email" required value=(datas? datas.username: "") minlength="2" maxlength="50" class="form-control")
 
-        label(for="password") Password 
-        input(type="password" name="password" required minlength="6" maxlength="50")
+        label(for="password" class="form-label") Password 
+        input(type="password" name="password" required minlength="6" maxlength="50" class="form-control")
 
-        label(for="password2") Password confirmation
-        input(type="password" name="password2" required minlength="6" maxlength="50")
+        label(for="password2" class="form-label") Password confirmation
+        input(type="password" name="password2" required minlength="6" maxlength="50" class="form-control")
 
-        label(for="firstName") First Name
-        input(type="text", name="firstName" required value=(datas? datas.firstName: "") minlength="2" maxlength="50")
+        label(for="firstName" class="form-label") First Name
+        input(type="text", name="firstName" required value=(datas? datas.firstName: "" ) minlength="2" maxlength="50" class="form-control")
 
-        label(for="lastName") Last Name
-        input(type="text", name="lastName" required value=(datas? datas.lastName: "") minlength="2" maxlength="50")
+        label(for="lastName" class="form-label") Last Name
+        input(type="text", name="lastName" required value=(datas? datas.lastName: "") minlength="2" maxlength="50" class="form-control")
 
-        input(type="submit" value="Sign Up")
+        button(type="submit" class="btn btn-primary") Sign Up
 
     if errors 
         ul
